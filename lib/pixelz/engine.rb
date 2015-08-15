@@ -1,3 +1,5 @@
+require 'pixelz/image'
+
 module Pixelz
   class Engine < ::Rails::Engine
     isolate_namespace Pixelz

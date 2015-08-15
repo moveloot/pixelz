@@ -6,10 +6,12 @@ require 'factory_girl'
 require 'database_cleaner'
 require 'sidekiq/testing'
 require 'webmock/rspec'
+require 'pixelz/fake_pixelz_api'
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
 Dir[File.join(ENGINE_RAILS_ROOT, "spec/factories/*.rb")].each {|f| require f }
-ActiveRecord::Migration.maintain_test_schema!
+# AFAIK We can't maintain schema via migration in engines.
+# ActiveRecord::Migration.maintain_test_schema!
 WebMock.disable_net_connect!(allow_localhost: true)
 
 RSpec.configure do |config|
@@ -33,7 +35,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
   end
   config.before do
-    stub_request(:any, /localhost:4999/).to_rack(FakePixelzApi)
+    stub_request(:any, /api.pixelz.com/).to_rack(FakePixelzApi)
     DatabaseCleaner.strategy = :transaction
   end
   config.before(:each, js: true) do

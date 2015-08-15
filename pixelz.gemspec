@@ -25,5 +25,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "spring", '~> 1.3.6'
   s.add_development_dependency "spring-commands-rspec", '~> 1.0.4'
   s.add_development_dependency "factory_girl_rails", '~> 4.5'
+  s.add_development_dependency "webmock", '~> 1.21.0'
   s.add_development_dependency "sinatra"
 end

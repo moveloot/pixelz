@@ -1,0 +1,7 @@
+<AddImageResponse>
+  <ErrorCode>NoError</ErrorCode>
+  <Message/>
+  <ImageTicket>a37a1f55-7cd4-4474-db19-ac03e85538a7</ImageTicket>
+  <IsTrial>false</IsTrial>
+  <CustomerImageId>12345</CustomerImageId>
+</AddImageResponse>
