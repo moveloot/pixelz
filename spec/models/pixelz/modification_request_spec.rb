@@ -18,7 +18,7 @@ describe Pixelz::ModificationRequest do
     end
     context 'a product identifier is provided' do
       it 'includes the product id with the request to pixelz' do
-        Pixelz.product_identifier = 'product_id'
+        Pixelz.product_identifier = :product_id
         allow_any_instance_of(Image).to receive(:product_id)
           .and_return('great_chair')
         success_xml = File.open(

@@ -4,7 +4,6 @@ require File.expand_path("../dummy/config/environment", __FILE__)
 require 'rspec/rails'
 require 'factory_girl'
 require 'database_cleaner'
-require 'sidekiq/testing'
 require 'webmock/rspec'
 require 'pixelz/fake_pixelz_api'
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
