@@ -11,7 +11,7 @@ class FakePixelzApi < Sinatra::Base
     @params = JSON.parse(body) if body.present?
   end
 
-  post '/REST.svc/Image' do
+  post '/REST.svc/Image/' do
     if valid_image_post?
       xml_response 200, 'image_post.xml'
     else
@@ -30,7 +30,7 @@ class FakePixelzApi < Sinatra::Base
     content_type :xml
     status response_code
     File.open(
-      File.dirname(__FILE__) + '/fixtures/fake_pixelz_api_responses' +
+      File.dirname(__FILE__) + '/../../spec/fixtures/fake_pixelz_api_responses/' +
       file_name, 'rb'
     ).read
   end
