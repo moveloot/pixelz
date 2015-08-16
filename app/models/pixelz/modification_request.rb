@@ -3,6 +3,7 @@ require 'pixelz/api_client/image'
 module Pixelz
   class ModificationRequest < ActiveRecord::Base
     belongs_to :modifiable, polymorphic: true
+    delegate Pixelz.processed_image_callback, to: :modifiable
 
     def self.modify(image)
       res = Pixelz::ApiClient::Image.new(image).post

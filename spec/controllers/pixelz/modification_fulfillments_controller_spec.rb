@@ -1,5 +1,5 @@
 describe Pixelz::ModificationFulfillmentsController, type: :request do
-  describe '#create' do
+  describe 'POST /pixelz/modification_fulfillments' do
     context 'a modification request with a matching ticket exists' do
       before do
         @modification_request =
@@ -12,6 +12,14 @@ describe Pixelz::ModificationFulfillmentsController, type: :request do
         expect(@modification_request.processed_image_url).to match 'processed'
         expect(@modification_request.pixelz_template_id).to match 'sometemp'
         expect(@modification_request.fulfilled_at).not_to be_nil
+      end
+      it 'calls the post-modification callback on the parent image' do
+        image_double = double('Image', save_processed_version: true)
+        allow_any_instance_of(Pixelz::ModificationRequest)
+          .to receive(:modifiable).and_return image_double
+        expect(image_double).to receive(:save_processed_version)
+          .with('img.processed')
+        post '/pixelz/modification_fulfillments', fulfillment_params
       end
     end
 
