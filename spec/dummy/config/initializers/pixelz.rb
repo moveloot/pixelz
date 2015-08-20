@@ -4,5 +4,4 @@ Pixelz.setup do |config|
   config.pixelz_account_email = "test@example.com"
   config.mount_uri = "https://test.com/pixelz"
   config.public_url_getter = :url
-  # config.product_identifier = 'product_id' # optional
 end

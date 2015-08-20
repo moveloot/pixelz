@@ -1,5 +1,11 @@
+require 'base64'
+require 'openssl'
+
 module Pixelz
   class ModificationFulfillmentsController < Pixelz::ApplicationController
+    
+    before_action :verify_webhook, only: :create
+
     def create
       set_modification_request
       update_modification_request
@@ -26,6 +32,18 @@ module Pixelz
         Pixelz.processed_image_callback,
         @modification_request.processed_image_url
       )
+    end
+
+    def verify_webhook
+      data = request.body.read.to_s
+      hmac_header = request.headers['HTTP_X_RTB_CUSTOMER_HMAC_SHA256']
+      digest  = OpenSSL::Digest.new('sha256')
+      sha = OpenSSL::HMAC.digest(digest, Pixelz.api_secret, data)
+      calculated_hmac = Base64.encode64(sha).strip
+      unless calculated_hmac == "rus1gtV590n0wXPlV9R"
+        head :unauthorized
+      end
+      request.body.rewind
     end
   end
 end

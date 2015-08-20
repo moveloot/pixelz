@@ -25,7 +25,8 @@ class FakePixelzApi < Sinatra::Base
 
   def valid_image_post?
     @params['contactEmail'].present? && @params['contactAPIkey'].present? &&
-      @params['imageURL'].present? && @params['imageCallbackURL'].present?
+      @params['imageURL'].present? && @params['imageCallbackURL'].present? && 
+      @params['developerAPIkey'].present?
   end
 
   def xml_response(response_code, file_name)

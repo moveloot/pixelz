@@ -13,7 +13,8 @@ module Pixelz
 
   class << self
     attr_accessor :api_key, :pixelz_account_email, :mount_uri,
-      :public_url_getter, :product_identifier, :processed_image_callback
+      :public_url_getter, :product_identifier, :processed_image_callback,
+      :api_secret
   end
 
   def self.setup(&block)

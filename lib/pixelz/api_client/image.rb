@@ -22,6 +22,7 @@ module Pixelz
         {
           contactEmail: Pixelz.pixelz_account_email,
           contactAPIkey: Pixelz.api_key,
+          developerAPIkey: Pixelz.api_key,
           imageURL: @image.send(Pixelz.public_url_getter),
           imageCallbackURL: Pixelz.mount_uri + '/modification_fulfillments'
         }.tap do |h|
