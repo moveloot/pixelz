@@ -33,7 +33,7 @@ describe Pixelz::ModificationRequest do
           imageURL: @image.url,
           imageCallbackURL: 'https://test.com/pixelz/modification_fulfillments',
           productId: 'great_chair'
-        }.to_json)
+        }.to_json, { 'Content-Type' => 'application/json; charset=UTF-8' })
       end
     end
   end

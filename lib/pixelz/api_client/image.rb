@@ -8,11 +8,15 @@ module Pixelz
       end
 
       def post
-        res = RestClient.post(BASE_URI + "/Image/", image_payload)
+        res = RestClient.post(BASE_URI + "/Image/", image_payload, headers)
         Hash.from_xml(res)
       end
 
       private
+
+      def headers
+        { 'Content-Type' => 'application/json; charset=UTF-8' }
+      end
 
       def image_payload
         {

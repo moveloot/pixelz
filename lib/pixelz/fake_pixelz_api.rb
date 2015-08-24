@@ -12,7 +12,9 @@ class FakePixelzApi < Sinatra::Base
   end
 
   post '/REST.svc/Image/' do
-    if valid_image_post?
+    if request.env['CONTENT_TYPE'] != 'application/json; charset=UTF-8'
+      status 400
+    elsif valid_image_post?
       xml_response 200, 'image_post.xml'
     else
       xml_response 200, 'image_post_error.xml'
