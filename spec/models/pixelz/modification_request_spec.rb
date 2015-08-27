@@ -8,6 +8,15 @@ describe Pixelz::ModificationRequest do
           .to eq 'a37a1f55-7cd4-4474-db19-ac03e85538a7'
         expect(@image.modification_requests).to include modification_request
       end
+      context 'a modification already exists' do
+        before { @image.modification_requests.create }
+        it 'does not send a second request or create another modification' do
+          allow(Pixelz::ApiClient::Image).to receive(:new)
+          Pixelz::ModificationRequest.modify(@image)
+          expect(Pixelz::ApiClient::Image).not_to have_received(:new)
+          expect(@image.modification_requests(true).count).to eq 1
+        end
+      end
     end
     context 'something causes Pixelz API error (e.g. missing param)' do
       it 'returns an informative error' do

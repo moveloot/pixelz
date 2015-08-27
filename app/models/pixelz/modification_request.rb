@@ -6,6 +6,9 @@ module Pixelz
     delegate Pixelz.processed_image_callback, to: :modifiable
 
     def self.modify(image)
+      return unless ModificationRequest.where(
+        modifiable_type: image.class.name, modifiable_id: image.id
+      ).empty?
       res = Pixelz::ApiClient::Image.new(image).post
       raise_pixelz_error(res)
       image.modification_requests
