@@ -35,12 +35,21 @@ module Pixelz
     end
 
     def verify_webhook
+      request.body.rewind
+      hmac_header = request.headers['Http-X-Rtb-Partner-Hmac-Sha256']
+      digest = OpenSSL::Digest.new('sha256')
       data = request.body.read.to_s
-      hmac_header = request.headers['HTTP_X_RTB_CUSTOMER_HMAC_SHA256']
-      digest  = OpenSSL::Digest.new('sha256')
       sha = OpenSSL::HMAC.digest(digest, Pixelz.api_secret, data)
       calculated_hmac = Base64.encode64(sha).strip
-      unless calculated_hmac == "rus1gtV590n0wXPlV9R"
+
+      p "Logging: Start"
+      p "HTTP Partner: " + hmac_header
+      p "End result: " + calculated_hmac
+      p "data: " + data
+      p "Logging: End"
+      # binding.pry
+
+      unless calculated_hmac == hmac_header
         head :unauthorized
       end
       request.body.rewind
