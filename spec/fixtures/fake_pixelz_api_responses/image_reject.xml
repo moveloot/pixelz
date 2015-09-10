@@ -1,0 +1,4 @@
+<RejectImageResponse>
+  <ErrorCode>NoError</ErrorCode>
+  <Message>Image was rejected.</Message>
+</RejectImageResponse>
