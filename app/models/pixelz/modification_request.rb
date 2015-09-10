@@ -19,7 +19,20 @@ module Pixelz
       return if res['AddImageResponse']['ErrorCode'] == 'NoError'
       raise Pixelz::Error.new res['AddImageResponse']['Message']
     end
+
+    def reject(comment)
+      res = Pixelz::ApiClient::Image.new(modifiable).reject(pixelz_ticket, comment)
+      raise_reject_pixelz_error(res)
+      res
+    end
+    
     private_class_method :raise_pixelz_error
 
+    private
+
+    def raise_reject_pixelz_error(res)
+      return if res['RejectImageResponse']['ErrorCode'] == 'NoError'
+      raise Pixelz::Error.new res['RejectImageResponse']['Message']
+    end
   end
 end
