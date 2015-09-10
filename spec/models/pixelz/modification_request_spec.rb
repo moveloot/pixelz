@@ -46,4 +46,25 @@ describe Pixelz::ModificationRequest do
       end
     end
   end
+
+  describe '#reject' do
+    before do
+      @image = create(:image)
+      @modify_image_request = Pixelz::ModificationRequest.modify(@image) 
+    end
+    context 'with comment' do
+      it 'returns no error code' do
+        comment = "The top of picture still have background colour."     
+        res = @modify_image_request.reject(comment)
+        expect(res["RejectImageResponse"]["ErrorCode"]).to eq 'NoError' 
+      end
+    end
+    context 'with blank comment' do
+      it 'returns no error code' do
+        comment = ""     
+        res = @modify_image_request.reject(comment)
+        expect(res["RejectImageResponse"]["ErrorCode"]).to eq 'NoError' 
+      end
+    end
+  end
 end
