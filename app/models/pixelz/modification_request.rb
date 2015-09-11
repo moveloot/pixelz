@@ -10,16 +10,22 @@ module Pixelz
         modifiable_type: image.class.name, modifiable_id: image.id
       ).empty?
       res = Pixelz::ApiClient::Image.new(image).post
-      raise_pixelz_error(res)
+      raise_pixelz_error(res, 'AddImageResponse')
       image.modification_requests
         .create(pixelz_ticket: res['AddImageResponse']['ImageTicket'])
     end
 
-    def self.raise_pixelz_error(res)
-      return if res['AddImageResponse']['ErrorCode'] == 'NoError'
-      raise Pixelz::Error.new res['AddImageResponse']['Message']
+    def self.raise_pixelz_error(res, key)
+      return if res[key]['ErrorCode'] == 'NoError'
+      raise Pixelz::Error.new res[key]['Message']
     end
-    private_class_method :raise_pixelz_error
 
+    def reject(comment)
+      res = Pixelz::ApiClient::Image.new(modifiable).reject(pixelz_ticket, comment)
+      Pixelz::ModificationRequest.send(:raise_pixelz_error, res, 'RejectImageResponse')
+      res
+    end
+    
+    private_class_method :raise_pixelz_error
   end
 end

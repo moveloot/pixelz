@@ -21,6 +21,14 @@ class FakePixelzApi < Sinatra::Base
     end
   end
 
+  put '/REST.svc/Image/Reject/:image_ticket' do
+    if request.env['CONTENT_TYPE'] != 'application/json; charset=UTF-8'
+      status 400
+    else
+      xml_response 200, 'image_reject.xml'
+    end
+  end
+
   private
 
   def valid_image_post?
