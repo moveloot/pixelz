@@ -21,11 +21,17 @@ module Pixelz
     end
 
     def reject(comment)
-      res = Pixelz::ApiClient::Image.new(modifiable).reject(pixelz_ticket, comment)
-      Pixelz::ModificationRequest.send(:raise_pixelz_error, res, 'RejectImageResponse')
-      res
+      api_image = Pixelz::ApiClient::Image.new(modifiable)
+      res = api_image.reject(pixelz_ticket, comment)
+      # Pixelz::ModificationRequest.raise_pixelz_error(
+      #   res,
+      #   'RejectImageResponse'
+      # )
     end
-    
-    private_class_method :raise_pixelz_error
+
+
+    def self.test(test)
+      test
+    end
   end
 end

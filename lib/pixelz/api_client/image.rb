@@ -27,7 +27,7 @@ module Pixelz
         { 'Content-Type' => 'application/json; charset=UTF-8' }
       end
 
-      def default_payload
+      def auth_payload
         {
           contactEmail: Pixelz.pixelz_account_email,
           contactAPIkey: Pixelz.api_key
@@ -40,7 +40,7 @@ module Pixelz
           imageCallbackURL: Pixelz.mount_uri + '/modification_fulfillments'
         }
 
-        default_payload.merge(payload).tap do |h|
+        auth_payload.merge(payload).tap do |h|
           if Pixelz.product_identifier.present?
             h.merge!(productId: @image.send(Pixelz.product_identifier))
           end
@@ -48,7 +48,8 @@ module Pixelz
       end
 
       def reject_image_payload(comment)
-        default_payload.merge({ comment: comment }).to_json      
+        p auth_payload
+        auth_payload.merge({ comment: comment }).to_json      
       end
     end
   end
